@@ -1,0 +1,140 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2024-07-06T01:25:21.985Z",
+        "line": 3,
+        "name": "Add two numbers",
+        "description": "",
+        "id": "calculator;add-two-numbers",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 5674000,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "I have a calculator",
+            "match": {
+              "location": "CalculatorSteps.i_have_a_calculator()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 453800,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "I add 5 and 3",
+            "match": {
+              "arguments": [
+                {
+                  "val": "5",
+                  "offset": 6
+                },
+                {
+                  "val": "3",
+                  "offset": 12
+                }
+              ],
+              "location": "CalculatorSteps.i_add_and(int,int)"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 2494600,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the result should be 8",
+            "match": {
+              "arguments": [
+                {
+                  "val": "8",
+                  "offset": 21
+                }
+              ],
+              "location": "CalculatorSteps.the_result_should_be(int)"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "start_timestamp": "2024-07-06T01:25:22.117Z",
+        "line": 8,
+        "name": "Subtract two numbers",
+        "description": "",
+        "id": "calculator;subtract-two-numbers",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 239300,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "I have a calculator",
+            "match": {
+              "location": "CalculatorSteps.i_have_a_calculator()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 275000,
+              "status": "passed"
+            },
+            "line": 10,
+            "name": "I subtract 8 from 4",
+            "match": {
+              "arguments": [
+                {
+                  "val": "8",
+                  "offset": 11
+                },
+                {
+                  "val": "4",
+                  "offset": 18
+                }
+              ],
+              "location": "CalculatorSteps.i_subtract_from(int,int)"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "error_message": "java.lang.AssertionError: expected:\u003c3\u003e but was:\u003c4\u003e\r\n\tat org.junit.Assert.fail(Assert.java:88)\r\n\tat org.junit.Assert.failNotEquals(Assert.java:834)\r\n\tat org.junit.Assert.assertEquals(Assert.java:645)\r\n\tat org.junit.Assert.assertEquals(Assert.java:631)\r\n\tat com.example.stepdefinitions.CalculatorSteps.the_result_should_be(CalculatorSteps.java:32)\r\n\tat ✽.the result should be 3(file:src/test/resources/features/Sample.feature:11)\r\n",
+              "duration": 1189300,
+              "status": "failed"
+            },
+            "line": 11,
+            "name": "the result should be 3",
+            "match": {
+              "arguments": [
+                {
+                  "val": "3",
+                  "offset": 21
+                }
+              ],
+              "location": "CalculatorSteps.the_result_should_be(int)"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "Calculator",
+    "description": "",
+    "id": "calculator",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/Sample.feature",
+    "tags": []
+  }
+]

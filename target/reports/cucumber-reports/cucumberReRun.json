@@ -1,0 +1,77 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2024-07-06T01:26:00.389Z",
+        "line": 8,
+        "name": "Subtract two numbers",
+        "description": "",
+        "id": "calculator;subtract-two-numbers",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 6267400,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "I have a calculator",
+            "match": {
+              "location": "CalculatorSteps.i_have_a_calculator()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 816300,
+              "status": "passed"
+            },
+            "line": 10,
+            "name": "I subtract 8 from 4",
+            "match": {
+              "arguments": [
+                {
+                  "val": "8",
+                  "offset": 11
+                },
+                {
+                  "val": "4",
+                  "offset": 18
+                }
+              ],
+              "location": "CalculatorSteps.i_subtract_from(int,int)"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "error_message": "java.lang.AssertionError: expected:\u003c3\u003e but was:\u003c4\u003e\r\n\tat org.junit.Assert.fail(Assert.java:88)\r\n\tat org.junit.Assert.failNotEquals(Assert.java:834)\r\n\tat org.junit.Assert.assertEquals(Assert.java:645)\r\n\tat org.junit.Assert.assertEquals(Assert.java:631)\r\n\tat com.example.stepdefinitions.CalculatorSteps.the_result_should_be(CalculatorSteps.java:32)\r\n\tat ✽.the result should be 3(file:src/test/resources/features/Sample.feature:11)\r\n",
+              "duration": 2679100,
+              "status": "failed"
+            },
+            "line": 11,
+            "name": "the result should be 3",
+            "match": {
+              "arguments": [
+                {
+                  "val": "3",
+                  "offset": 21
+                }
+              ],
+              "location": "CalculatorSteps.the_result_should_be(int)"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "Calculator",
+    "description": "",
+    "id": "calculator",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/Sample.feature",
+    "tags": []
+  }
+]

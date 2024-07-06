@@ -1,0 +1,88 @@
+pipeline {
+    agent any
+
+    environment {
+        ALLURE_RESULTS_DIR = 'allure-results'
+        ALLURE_REPORT_DIR = 'allure-report'
+    }
+
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                script {
+                    try {
+                    dir('C:\\Users\\vamsi\\Documents\\ReRun-Mechanism\\ReRunMechanism'){
+                    bat './gradlew test --tests com.example.runners.Runner'
+                    echo 'Running............'
+                    }
+                         
+                        //gradlew test --tests Runner // Adjust this command based on your build tool
+                    } catch (Exception e) {
+                        // Ignore errors to allow post section to execute
+                    }
+                }
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                script {
+                    try {
+                    dir('C:\\Users\\vamsi\\Documents\\ReRun-Mechanism\\ReRunMechanism'){
+                    bat './gradlew test --tests com.example.runners.ReRunner'
+                    echo 'Running............'
+                    }
+                         
+                        //gradlew test --tests Runner // Adjust this command based on your build tool
+                    } catch (Exception e) {
+                        // Ignore errors to allow post section to execute
+                    }
+                }
+            }
+        }
+        
+        stage('Generate Allure Report') {
+            steps {
+                allure([
+                    includeProperties: false, 
+                    jdk: '', 
+                    properties: [], 
+                    reportBuildPolicy: 'ALWAYS', 
+                    results: [[path: 'admin/allure-results']]
+                ])
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                allure([
+                    includeProperties: false, 
+                    jdk: '', 
+                    properties: [], 
+                    reportBuildPolicy: 'ALWAYS', 
+                    results: [[path: 'admin/allure-results']]
+                ])
+            }
+            emailext(
+                subject: "Jenkins Build - ${currentBuild.fullDisplayName}",
+                body: """
+                <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                <p>Allure Report: <a href="${env.BUILD_URL}allure">${env.BUILD_URL}allure</a></p>
+                """,
+                to: 'vamsipenugurthi52@gmail.com',
+                attachLog: true
+            )
+        }
+        cleanup {
+            deleteDir()
+        }
+    }
+}
