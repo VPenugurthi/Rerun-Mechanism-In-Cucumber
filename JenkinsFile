@@ -7,11 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Clean Workspace') {
-            steps {
-                deleteDir()
-            }
-        }
         
         stage('Run Tests') {
             steps {
@@ -80,9 +75,6 @@ pipeline {
                 to: 'vamsipenugurthi52@gmail.com',
                 attachLog: true
             )
-        }
-        cleanup {
-            deleteDir()
         }
     }
 }
