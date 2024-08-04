@@ -12,20 +12,32 @@ pipeline {
             steps {
                 echo "Run Entire Suite"
                 script {
+                    def firstBuildStatus = 'SUCCESS'
+                    def secondBuildStatus = 'SUCCESS'
+
+                    // Run the first test suite
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                         try {
                             powershell "./gradlew test --tests com.example.runners.Runner"
                         } catch (Exception e) {
                             echo "First Build Failed"
+                            firstBuildStatus = 'FAILURE'
                         }
                     }
 
+                    // Run the second test suite
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                         try {
                             powershell "./gradlew test --tests com.example.runners.ReRunner"
                         } catch (Exception e) {
                             echo "Second Build Failed"
+                            secondBuildStatus = 'FAILURE'
                         }
+                    }
+
+                    // Handle overall result
+                    if (firstBuildStatus == 'FAILURE' || secondBuildStatus == 'FAILURE') {
+                        currentBuild.result = 'UNSTABLE'
                     }
                 }
             }
