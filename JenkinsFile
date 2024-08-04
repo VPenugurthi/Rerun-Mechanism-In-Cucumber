@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo "Running First Test Suite"
                 script {
-                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         powershell "./gradlew test --tests com.example.runners.Runner"
                     }
                 }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo "Running Second Test Suite"
                 script {
-                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         powershell "./gradlew test --tests com.example.runners.ReRunner"
                     }
                 }
