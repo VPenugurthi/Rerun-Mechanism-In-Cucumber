@@ -7,36 +7,25 @@ pipeline {
     }
 
     stages {
-        
-        stage('Run Tests') {
+
+        stage('Run Entire Suite') {
             steps {
+                echo "Run Entire Suite"
                 script {
-                    try {
-                    dir('C:\\Users\\vamsi\\Documents\\ReRun-Mechanism\\ReRunMechanism'){
-                    bat './gradlew test --tests com.example.runners.Runner'
-                    echo 'Running............'
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        try {
+                            powershell "./gradlew test --tests com.example.runners.Runner"
+                        } catch (Exception e) {
+                            echo "First Build Failed"
+                        }
                     }
-                         
-                        //gradlew test --tests Runner // Adjust this command based on your build tool
-                    } catch (Exception e) {
-                        // Ignore errors to allow post section to execute
-                    }
-                }
-            }
-        }
-        
-        stage('Run Failed Tests') {
-            steps {
-                script {
-                    try {
-                    dir('C:\\Users\\vamsi\\Documents\\ReRun-Mechanism\\ReRunMechanism'){
-                    bat './gradlew test --tests com.example.runners.ReRunner'
-                    echo 'Running............'
-                    }
-                         
-                        //gradlew test --tests Runner // Adjust this command based on your build tool
-                    } catch (Exception e) {
-                        // Ignore errors to allow post section to execute
+
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        try {
+                            powershell "./gradlew test --tests com.example.runners.ReRunner"
+                        } catch (Exception e) {
+                            echo "Second Build Failed"
+                        }
                     }
                 }
             }
