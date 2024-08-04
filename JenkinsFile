@@ -12,11 +12,9 @@ pipeline {
             steps {
                 echo "Running First Test Suite"
                 script {
-                    try {
+                    // Using `catchError` to ensure the stage continues even if an error occurs
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                         powershell "./gradlew test --tests com.example.runners.Runner"
-                    } catch (Exception e) {
-                        echo "First Test Suite Failed"
-                        currentBuild.result = currentBuild.result == 'SUCCESS' ? 'UNSTABLE' : currentBuild.result
                     }
                 }
             }
@@ -26,11 +24,9 @@ pipeline {
             steps {
                 echo "Running Second Test Suite"
                 script {
-                    try {
+                    // Using `catchError` to ensure the stage continues even if an error occurs
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                         powershell "./gradlew test --tests com.example.runners.ReRunner"
-                    } catch (Exception e) {
-                        echo "Second Test Suite Failed"
-                        currentBuild.result = currentBuild.result == 'SUCCESS' ? 'UNSTABLE' : currentBuild.result
                     }
                 }
             }
