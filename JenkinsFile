@@ -8,32 +8,29 @@ pipeline {
 
     stages {
 
-        stage('Run Entire Suite') {
+        stage('Run First Test Suite') {
             steps {
-                echo "Run Entire Suite"
+                echo "Running First Test Suite"
                 script {
-                    def firstBuildStatus = 'SUCCESS'
-                    def secondBuildStatus = 'SUCCESS'
-
-                    // Run the first test suite
                     try {
                         powershell "./gradlew test --tests com.example.runners.Runner"
                     } catch (Exception e) {
-                        echo "First Build Failed"
-                        firstBuildStatus = 'FAILURE'
+                        echo "First Test Suite Failed"
+                        currentBuild.result = currentBuild.result == 'SUCCESS' ? 'UNSTABLE' : currentBuild.result
                     }
+                }
+            }
+        }
 
-                    // Run the second test suite
+        stage('Run Second Test Suite') {
+            steps {
+                echo "Running Second Test Suite"
+                script {
                     try {
                         powershell "./gradlew test --tests com.example.runners.ReRunner"
                     } catch (Exception e) {
-                        echo "Second Build Failed"
-                        secondBuildStatus = 'FAILURE'
-                    }
-
-                    // Set overall build result based on the test statuses
-                    if (firstBuildStatus == 'FAILURE' || secondBuildStatus == 'FAILURE') {
-                        currentBuild.result = 'UNSTABLE'
+                        echo "Second Test Suite Failed"
+                        currentBuild.result = currentBuild.result == 'SUCCESS' ? 'UNSTABLE' : currentBuild.result
                     }
                 }
             }
@@ -41,6 +38,7 @@ pipeline {
         
         stage('Generate Allure Report') {
             steps {
+                echo "Generating Allure Report"
                 allure([
                     includeProperties: false, 
                     jdk: '', 
@@ -55,6 +53,7 @@ pipeline {
     post {
         always {
             script {
+                echo "Generating Allure Report in Post-Build"
                 allure([
                     includeProperties: false, 
                     jdk: '', 
