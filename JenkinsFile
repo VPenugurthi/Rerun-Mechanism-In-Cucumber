@@ -16,26 +16,22 @@ pipeline {
                     def secondBuildStatus = 'SUCCESS'
 
                     // Run the first test suite
-                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                        try {
-                            powershell "./gradlew test --tests com.example.runners.Runner"
-                        } catch (Exception e) {
-                            echo "First Build Failed"
-                            firstBuildStatus = 'FAILURE'
-                        }
+                    try {
+                        powershell "./gradlew test --tests com.example.runners.Runner"
+                    } catch (Exception e) {
+                        echo "First Build Failed"
+                        firstBuildStatus = 'FAILURE'
                     }
 
                     // Run the second test suite
-                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                        try {
-                            powershell "./gradlew test --tests com.example.runners.ReRunner"
-                        } catch (Exception e) {
-                            echo "Second Build Failed"
-                            secondBuildStatus = 'FAILURE'
-                        }
+                    try {
+                        powershell "./gradlew test --tests com.example.runners.ReRunner"
+                    } catch (Exception e) {
+                        echo "Second Build Failed"
+                        secondBuildStatus = 'FAILURE'
                     }
 
-                    // Handle overall result
+                    // Set overall build result based on the test statuses
                     if (firstBuildStatus == 'FAILURE' || secondBuildStatus == 'FAILURE') {
                         currentBuild.result = 'UNSTABLE'
                     }
